@@ -1,7 +1,7 @@
 const around = [{dx: -1, dy: 0}, {dx: 1, dy: 0},
     {dx: 0, dy: -1}, {dx: 0, dy: 1},];
 
-function draw(pos, state, dispatch) {
+export function draw(pos, state, dispatch) {
     function drawPixel({x,y}, state) {
         let drawn = {x, y, color: state.color};
         dispatch({picture: state.picture.draw([drawn])});
@@ -10,12 +10,12 @@ function draw(pos, state, dispatch) {
     return drawPixel;
 }
 
-function rectangle(start, state, dispatch) {
+export function rectangle(start, state, dispatch) {
     function drawRectangle(pos) {
-        let xStart = Math.min(pos.x, start.x);
-        let yStart = Math.min(pos.y, start.y);
-        let xEnd = Math.max(pos.x, start.x);
-        let yEnd = Math.max(pos.y, start.y);
+        let xStart = Math.min(start.x, pos.x);
+        let yStart = Math.min(start.y, pos.y);
+        let xEnd = Math.max(start.x, pos.x);
+        let yEnd = Math.max(start.y, pos.y);
         let drawn = [];
 
         for(let y = yStart; y <= yEnd; y++) {
@@ -23,13 +23,13 @@ function rectangle(start, state, dispatch) {
                 drawn.push({x, y, color: state.color});
             }
         }
-        dispatch({picture: state.picture.draw([drawn])});
+        dispatch({picture: state.picture.draw(drawn)});
     }
     drawRectangle(start);
     return drawRectangle;
 }
 
-function fill({x,y}, state, dispatch) {
+export function fill({x,y}, state, dispatch) {
     let targetColor = state.picture.pixel(x,y);
     let drawn = [{x, y, color: state.color}];
 
@@ -45,4 +45,8 @@ function fill({x,y}, state, dispatch) {
         }
     }
     dispatch({picture: state.picture.draw(drawn)});
+}
+
+export function pick(position, state, dispatch) {
+    dispatch({color: state.picture.pixel(position.x, position.y)});
 }

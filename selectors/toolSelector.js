@@ -1,4 +1,4 @@
-class ToolSelector {
+export class ToolSelector {
     constructor(state, {tools, dispatch}) {
         this.select = elt('select', {
             onchange: () => dispatch({tool: this.select.value})

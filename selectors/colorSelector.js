@@ -1,4 +1,4 @@
-class ColorSelector {
+export class ColorSelector {
     constructor(state, {dispatch}) {
         this.input = elt('input', {
             type: 'color',

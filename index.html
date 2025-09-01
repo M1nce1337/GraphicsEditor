@@ -1,10 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>GraphicsEditor</title>
 </head>
 <body>
-$END$
+  <div></div>
+  <script>
+      async function loadApp() {
+          let app = await import('./app.js');
+          document.querySelector('div').appendChild(app.startPixelEditor({}));
+      }
+
+
+
+      function elt(type, props, ...children) {
+          let dom = document.createElement(type);
+
+          if (props) {
+              Object.assign(dom, props);
+          }
+
+          for (let child of children) {
+              if (typeof child != 'string') {
+                  dom.appendChild(child);
+              }
+              else {
+                  dom.appendChild(document.createTextNode(child));
+              }
+          }
+          return dom;
+      }
+      loadApp();
+  </script>
 </body>
 </html>
